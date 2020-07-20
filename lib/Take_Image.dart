@@ -11,6 +11,7 @@ class _TakeImageState extends State<TakeImage> {
   File _image;
   final picker = ImagePicker();
 
+
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
@@ -79,23 +80,26 @@ class _TakeImageState extends State<TakeImage> {
                           onPressed: ()=>{movetoLastscreen()},
                         ),
 
-                        RaisedButton(
+                        MaterialButton(
                           onPressed: ()=>{
                             createAlertDialog(context)
                           },
                           textColor: Colors.white,
                           color: Color(0xff106f10),
+                          disabledElevation: 0.0,
 
                           child: Text(file ,
                             style: TextStyle(fontSize: 20.0),),
                         ),
-                        Align(
-                            alignment: Alignment.topRight,
-                            child: IconButton(
+
+
+                        
+                            IconButton(
                               icon: Icon(Icons.more_vert),
+
                               onPressed: ()=>{},
                             )
-                        ),
+                        
 
 
                       ],
@@ -107,22 +111,56 @@ class _TakeImageState extends State<TakeImage> {
           ],
         ),
       ),
-      floatingActionButton: Stack(
+      body: Stack(
         children: <Widget>[
-          Padding(padding: EdgeInsets.only(left:31),
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: FloatingActionButton(
-                onPressed: ()=>{openGallery()},
-                child: Icon(Icons.insert_photo),),
-            ),),
+          Positioned(
+            bottom: MediaQuery.of(context).size.height*.003,
+            left: MediaQuery.of(context).size.width*.008,
+            right: MediaQuery.of(context).size.width*.006,
+            child: Container(
 
-          Align(
-            alignment: Alignment.bottomRight,
-            child: FloatingActionButton(
-              onPressed: ()=>{getImage()},
-              child: Icon(Icons.photo_camera),),
-          ),
+                child: Stack(
+                  children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width*0.49,
+                        height: MediaQuery.of(context).size.height*0.07,
+                        child: MaterialButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            side: BorderSide(color: Colors.white,width: 2.0)
+                          ),
+                          color: Color(0xff106f10),
+                          onPressed: ()=>{openGallery()},
+
+                          child: Text("Gallery",style: TextStyle(color: Colors.white,fontSize: 17.0),),
+                      ),
+                ),
+
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width*0.49,
+                      height: MediaQuery.of(context).size.height*0.07,
+                      child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          side: BorderSide(color: Color(0xff106f10),width: 2.0),
+
+                        ),
+
+                        color: Colors.white,
+                        onPressed: ()=>{getImage()},
+
+                        child: Text("Camera",style: TextStyle(color: Color(0xff106f10),fontSize: 17.0),),
+                      ),
+                    )
+                    ]
+                )
+              ]
+                ),
+              ),
+            ),
+
         ],
       ),
     );
